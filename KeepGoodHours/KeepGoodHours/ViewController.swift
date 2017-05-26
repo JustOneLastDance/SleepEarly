@@ -28,6 +28,8 @@ class ViewController: UIViewController {
         // TODO:-
         
         insistDaysView.days = "123"
+        
+        xmt_Umeng_Share()
     }
     
     var weather: WeatherModel? {
@@ -144,6 +146,27 @@ extension ViewController: CLLocationManagerDelegate {
     // MARK:- 通知监听
     func startCLLocationManger() {
         locationManger.startUpdatingLocation()
+    }
+    
+    // MARK:- Umeng share
+    func xmt_Umeng_Share() {
+        let messageObject: UMSocialMessageObject = UMSocialMessageObject.init()
+        messageObject.text = "Hey! Buddy! Show me SOMETHING Please!!"
+        
+//        let shareObejct: UMShareImageObject = UMShareImageObject.init()
+//        shareObejct.thumbImage = "https://mmbiz.qlogo.cn/mmbiz_png/zHPbLdSVHHOeSDTcnLYTXCDS2FJd7zpJosfedeV4ib52KgAkJ4ydDucquhdGKsZciapMWrT5dvCPFuwiclictJbVyQ/0?wx_fmt=png"
+//        shareObejct.shareImage = UIImage(named: "icon_60")
+//        messageObject.shareObject = shareObejct
+        
+        UMSocialManager.default().share(to: .wechatTimeLine, messageObject: messageObject, currentViewController: self) { (data: Any?, error: Error?) in
+            
+            if let err = error {
+                print("err:\(err)")
+            }
+            
+            print("\(String(describing: data))")
+            
+        }
     }
     
     // MARK:- 原生分享功能

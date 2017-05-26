@@ -12,10 +12,18 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    private let uMeng_Key = "5928172a04e2053b29000692"
+    private let shareInstance: UMSocialManager = UMSocialManager.default()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        shareInstance.openLog(true)
+        shareInstance.umSocialAppkey = uMeng_Key
+        
+        configUSharePlatforms()
+        
         return true
     }
 
@@ -42,7 +50,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let result: Bool = shareInstance.handleOpen(url, options: options)
+        
+        if !result {
+            
+        }
+        
+        return result
+    }
+    
+    // MARK:- 
+    func configUSharePlatforms() {
+        shareInstance.setPlaform(.wechatSession, appKey: "wx9394a0cc0b8e55a6", appSecret: "64f4187c692cf473ec9be289c3ce9e19", redirectURL: "http://mobile.umeng.com/social")
+    }
+    
 }
 
