@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     
@@ -17,12 +18,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let shareInstance: UMSocialManager = UMSocialManager.default()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
+        // 友盟相关设置
         shareInstance.openLog(true)
         shareInstance.umSocialAppkey = uMeng_Key
-        
         configUSharePlatforms()
+        
+        // 通知授权
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { (success, error) in
+                if success {
+                    print("success")
+                } else {
+                    print("fail")
+                }
+            })
+            
+        } else {
+            let notifySettings = UIUserNotificationSettings(types: [.badge , .sound , .alert], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(notifySettings)
+        }
         
         return true
     }
@@ -61,9 +76,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return result
     }
     
-    // MARK:- 
+    
+    // MARK:- UMENG 
     func configUSharePlatforms() {
         shareInstance.setPlaform(.wechatSession, appKey: "wx9394a0cc0b8e55a6", appSecret: "64f4187c692cf473ec9be289c3ce9e19", redirectURL: "http://mobile.umeng.com/social")
+    }
+    
+    
+    // MARK:- UNUserNotificationCenterDelegate
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        //  TODO:-
+    }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        // todo:-
     }
     
 }

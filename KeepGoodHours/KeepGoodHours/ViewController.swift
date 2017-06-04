@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import Social
+import UserNotifications
 
 class ViewController: UIViewController {
     
@@ -21,15 +22,12 @@ class ViewController: UIViewController {
     
     // MARK:- button
     @IBAction func didClickShareButton(_ sender: Any) {
-        // native
-//        xmt_nativeShare()
-        
-        // SDK
+        // UMeng SDK
         // TODO:-
+        xmt_Umeng_Share()
         
         insistDaysView.days = "123"
         
-        xmt_Umeng_Share()
     }
     
     var weather: WeatherModel? {
@@ -135,7 +133,6 @@ extension ViewController: CLLocationManagerDelegate {
         }
         
     }
-    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         cityLabel.text = "火星"
         atmosphereLabel.text = "气象局休假～"
@@ -143,45 +140,55 @@ extension ViewController: CLLocationManagerDelegate {
         temperatureLabel.sizeToFit()
     }
     
+    
     // MARK:- 通知监听
     func startCLLocationManger() {
         locationManger.startUpdatingLocation()
     }
     
+    
     // MARK:- Umeng share
     func xmt_Umeng_Share() {
         let messageObject: UMSocialMessageObject = UMSocialMessageObject.init()
-        messageObject.text = "Hey! Buddy! Show me SOMETHING Please!!"
-        
-//        let shareObejct: UMShareImageObject = UMShareImageObject.init()
-//        shareObejct.thumbImage = "https://mmbiz.qlogo.cn/mmbiz_png/zHPbLdSVHHOeSDTcnLYTXCDS2FJd7zpJosfedeV4ib52KgAkJ4ydDucquhdGKsZciapMWrT5dvCPFuwiclictJbVyQ/0?wx_fmt=png"
-//        shareObejct.shareImage = UIImage(named: "icon_60")
-//        messageObject.shareObject = shareObejct
+        let shareObejct = UMShareImageObject()
+        shareObejct.shareImage = xmt_snipScreen()
+        messageObject.shareObject = shareObejct
         
         UMSocialManager.default().share(to: .wechatTimeLine, messageObject: messageObject, currentViewController: self) { (data: Any?, error: Error?) in
             
             if let err = error {
                 print("err:\(err)")
             }
-            
             print("\(String(describing: data))")
-            
         }
     }
     
-    // MARK:- 原生分享功能
-    func xmt_nativeShare() {
-        if !(SLComposeViewController.isAvailable(forServiceType: SLServiceTypeTencentWeibo)) {
-            print("not support WeiXin")
-            return
+    
+    // MARK:- 截取当前屏幕
+    func xmt_snipScreen() -> UIImage {
+        
+        UIGraphicsBeginImageContextWithOptions(self.view.frame.size, false, UIScreen.main.scale)
+        UIApplication.shared.keyWindow?.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+    
+    
+    // MARK:- 闹铃相关
+    func xmt_createClock() {
+        if #available(iOS 10.0, *) {
+        
+            let notifyContent = UNMutableNotificationContent()
+            notifyContent.title = "该起床了"
+            
+            
+        } else {
+            
+            
+            
         }
-        
-        let composeViewController: SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTencentWeibo)
-        composeViewController.add(UIImage(named: "icon_60"))
-        composeViewController.add(URL(string: "https://www.weibo.com"))
-        composeViewController.setInitialText("That's my own app named SleepEarly!")
-        
-        self.present(composeViewController, animated: true, completion: nil)
     }
 }
 
