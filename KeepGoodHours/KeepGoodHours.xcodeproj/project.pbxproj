@@ -27,6 +27,7 @@
 		E4AA6DA51ED87EE70019F6A7 /* libUMSocialLog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AA6D9C1ED87EE70019F6A7 /* libUMSocialLog.a */; };
 		E4AA6DA61ED87EE70019F6A7 /* UMSocialSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E4AA6D9E1ED87EE70019F6A7 /* UMSocialSDKResources.bundle */; };
 		E4AA6DA71ED87EE70019F6A7 /* UShareUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AA6D9F1ED87EE70019F6A7 /* UShareUI.framework */; };
+		E4B1E19F1F08536F00EB207F /* sea&seagull.wav in Resources */ = {isa = PBXBuildFile; fileRef = E4B1E19E1F08536F00EB207F /* sea&seagull.wav */; };
 		E4B89D671ED87FD900426B50 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B89D661ED87FD900426B50 /* libsqlite3.tbd */; };
 		E4B89D691ED87FE100426B50 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B89D681ED87FE100426B50 /* CoreGraphics.framework */; };
 		E4B89D6B1ED87FEA00426B50 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B89D6A1ED87FEA00426B50 /* SystemConfiguration.framework */; };
@@ -61,6 +62,7 @@
 		E4AA6D9C1ED87EE70019F6A7 /* libUMSocialLog.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMSocialLog.a; sourceTree = "<group>"; };
 		E4AA6D9E1ED87EE70019F6A7 /* UMSocialSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResources.bundle; sourceTree = "<group>"; };
 		E4AA6D9F1ED87EE70019F6A7 /* UShareUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UShareUI.framework; sourceTree = "<group>"; };
+		E4B1E19E1F08536F00EB207F /* sea&seagull.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "sea&seagull.wav"; sourceTree = "<group>"; };
 		E4B89D661ED87FD900426B50 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		E4B89D681ED87FE100426B50 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E4B89D6A1ED87FEA00426B50 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -123,6 +125,7 @@
 				E4AA6D7A1ED876870019F6A7 /* Extension */,
 				E4AA6D8E1ED87D070019F6A7 /* Framework */,
 				E4AA6D6A1ED874AD0019F6A7 /* Assets.xcassets */,
+				E4B1E19E1F08536F00EB207F /* sea&seagull.wav */,
 				E4AA6D6C1ED874AD0019F6A7 /* LaunchScreen.storyboard */,
 				E4AA6D6F1ED874AD0019F6A7 /* Info.plist */,
 			);
@@ -304,6 +307,7 @@
 				E4AA6D8D1ED877C90019F6A7 /* Main.storyboard in Resources */,
 				E4AA6D6E1ED874AD0019F6A7 /* LaunchScreen.storyboard in Resources */,
 				E4AA6D6B1ED874AD0019F6A7 /* Assets.xcassets in Resources */,
+				E4B1E19F1F08536F00EB207F /* sea&seagull.wav in Resources */,
 				E4AA6DA41ED87EE70019F6A7 /* UMSocialSDKPromptResources.bundle in Resources */,
 				E4AA6DA61ED87EE70019F6A7 /* UMSocialSDKResources.bundle in Resources */,
 			);

@@ -43,7 +43,6 @@ extension AIIBounceInsistDaysView: UITabBarDelegate,UITableViewDataSource,UITabl
         
         for i in 0...3 {
             let tableView: UITableView = UITableView.init(frame: CGRect.init(x: CGFloat(i) * w, y: 0, width: w, height: h), style: .plain)
-            print("\(tableView.frame)")
             tableView.register(AIIBounceDaysTableViewCell.self, forCellReuseIdentifier: kTableViewCellID)
             
             tableView.tag = 1000 + i
@@ -80,7 +79,6 @@ extension AIIBounceInsistDaysView: UITabBarDelegate,UITableViewDataSource,UITabl
             let tableView: UITableView = viewWithTag(1000 + i) as! UITableView
             let number = CGFloat((numberArray[i] as NSString).floatValue)
             let point: CGPoint = CGPoint(x: 0, y: number * frame.size.height)
-            print("\(point)")
             tableView.setContentOffset(point, animated: true)
         }
     }

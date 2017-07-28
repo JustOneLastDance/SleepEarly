@@ -21,7 +21,8 @@ class AIIBounceDaysTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
-        xmt_setupUI()
+        contentView.backgroundColor = UIColor.randomColor()
+//        xmt_setupUI()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,17 +43,18 @@ class AIIBounceDaysTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         // 历史遗留问题，由于初始化时 cell 的默认 宽 高 就是320 44 如果需要自定大小或者控件，必须放在这里面才行
-        print("contentView:\(contentView.frame)")
-        addSubview(numberLabel)
+        xmt_setupUI()
     }
 
 }
 
 extension AIIBounceDaysTableViewCell {
     func xmt_setupUI() {
-        numberLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 30, height: 40))
+        numberLabel.frame = CGRect.init(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
         numberLabel.textAlignment = .center
-        contentView.backgroundColor = UIColor.randomColor()
+        numberLabel.font = UIFont.systemFont(ofSize: 24)
+        numberLabel.textColor = UIColor.white
+        contentView.addSubview(numberLabel)
     }
 }
 

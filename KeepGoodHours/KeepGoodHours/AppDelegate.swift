@@ -28,11 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { (success, error) in
                 if success {
-                    print("success")
+                    print("UserNotificationCenter_success")
                 } else {
-                    print("fail")
+                    print("UserNotificationCenter_fail")
                 }
             })
+            UNUserNotificationCenter.current().delegate = self
             
         } else {
             let notifySettings = UIUserNotificationSettings(types: [.badge , .sound , .alert], categories: nil)
@@ -54,7 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        print("AppWillEnterForeground")
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: kStartLocationNotification), object: nil, userInfo: nil)
     }
 
@@ -86,9 +86,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // MARK:- UNUserNotificationCenterDelegate
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         //  TODO:-
+        print("userNotification_willPresent")
+        completionHandler([.badge, .alert, .sound])
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         // todo:-
+        print("userNotification_didReceive")
+        // the following code must be added
+        completionHandler()
     }
     
 }

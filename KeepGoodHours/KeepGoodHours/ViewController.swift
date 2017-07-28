@@ -17,17 +17,27 @@ class ViewController: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var atmosphereLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var topView: UIView!
+    
+    @IBOutlet weak var bedTimeLabel: UILabel!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var confirmTimeButton: UIButton!
     
     var insistDaysView = AIIBounceInsistDaysView()
     
     // MARK:- button
+    @IBAction func didClickConfirmTimeButton(_ sender: Any) {
+        // todo:-
+        xmt_createClock()
+    }
+    
     @IBAction func didClickShareButton(_ sender: Any) {
         // UMeng SDK
-        // TODO:-
         xmt_Umeng_Share()
         
-        insistDaysView.days = "123"
+//        insistDaysView.days = "123"
         
+//        xmt_changeTheTheme()
     }
     
     var weather: WeatherModel? {
@@ -52,11 +62,15 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.white
+        
         xmt_checkLocationAuthorization()
         
         NotificationCenter.default.addObserver(self, selector: #selector(startCLLocationManger), name: NSNotification.Name(rawValue: kStartLocationNotification), object: nil)
         
         xmt_setupUI()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,7 +96,8 @@ extension ViewController: CLLocationManagerDelegate {
     
     /// 初始化界面
     func xmt_setupUI() {
-        insistDaysView = AIIBounceInsistDaysView.init(frame: CGRect.init(x: 150, y: 250, width: 120, height: 40))
+        insistDaysView = AIIBounceInsistDaysView.init(frame: CGRect.init(x: 0, y: 200, width: 200, height: 80))
+//        insistDaysView.isUserInteractionEnabled = false
         view.addSubview(insistDaysView)
     }
     
@@ -167,28 +182,62 @@ extension ViewController: CLLocationManagerDelegate {
     // MARK:- 截取当前屏幕
     func xmt_snipScreen() -> UIImage {
         
-        UIGraphicsBeginImageContextWithOptions(self.view.frame.size, false, UIScreen.main.scale)
-        UIApplication.shared.keyWindow?.layer.render(in: UIGraphicsGetCurrentContext()!)
+        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, UIScreen.main.scale)
+        view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        
         return image
     }
     
     
     // MARK:- 闹铃相关
     func xmt_createClock() {
-        if #available(iOS 10.0, *) {
         
+        if #available(iOS 10.0, *) {
             let notifyContent = UNMutableNotificationContent()
-            notifyContent.title = "该起床了"
+            notifyContent.title = "该起床啦"
+            notifyContent.body = "太阳晒屁股啦！！！"
+            notifyContent.sound = UNNotificationSound.init(named: "sea&seagull.wav")
+//            notifyContent.categoryIdentifier = "ClockCategoryIndentifier"
             
+            let date = datePicker.date
+            let calendar = Calendar.current
+            let componments = calendar.dateComponents([.hour, .minute], from: date)
+//            let trigger = UNCalendarNotificationTrigger.init(dateMatching: componments, repeats: true)
+            
+            // following code -> test
+            let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 5, repeats: false)
+            let request = UNNotificationRequest.init(identifier: "ClockNotification", content: notifyContent, trigger: trigger)
+            
+            let userNotificationCenter = UNUserNotificationCenter.current()
+            userNotificationCenter.add(request, withCompletionHandler: nil)
             
         } else {
-            
-            
-            
+            let fireDate = datePicker.date
+            let localNotication = UILocalNotification()
+            localNotication.fireDate = fireDate
+            localNotication.timeZone = NSTimeZone.default
+            localNotication.alertTitle = "该起床啦"
+            localNotication.alertBody = "太阳晒屁股啦！！！"
+            localNotication.soundName = "sea&seagull.wav"
+            UIApplication.shared.scheduleLocalNotification(localNotication)
         }
+    }
+    
+    // MARK:- about Theme
+    func xmt_changeTheTheme() {
+        
+        let color = UIColor.randomColor()
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveLinear, animations: { 
+            self.topView.backgroundColor = color
+        }) { (true) in
+            UIView.animate(withDuration: 0.3, animations: { 
+                self.bedTimeLabel.backgroundColor = color
+            })
+        }
+        UIView.animate(withDuration: 0.3, delay: 0.6, options: .curveLinear, animations: {
+            self.confirmTimeButton.backgroundColor = color
+        }, completion: nil)
     }
 }
 
